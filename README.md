@@ -17,12 +17,22 @@ You should have Docker (https://docs.docker.com/install/) and Git (https://git-s
 cd ./xmds2_docker/GSL
 docker build -t xmds .
 ```
-4. Add a shortcut to your `/.bashrc` and reload environment 
+4. Add a shortcut to your `/.bashrc` and reload environment
+If using GSL/ATLAS, use the following:
 ```
 cd ..
 cat script>>~/.bashrc
 source ~/.bashrc
 ```
+
+If using MKL, use this:
+```
+cd ..
+cat script_intel>>~/.bashrc
+source ~/.bashrc
+```
+
+
 5. Test the installation. You may need to supply the full `.xmds` filepath, e.g.
 ```
 xmds2 /home/mahasen/xmds2_docker/test/lorenz.xmds
