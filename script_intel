@@ -1,0 +1,31 @@
+# Dockerised XMDS2
+function xmds2() {
+    FNAME=$1
+    # check that filetype is .xmds
+    if [[ $FNAME == *.xmds  ]]; then
+       :
+    else
+        echo "File is not .xmds"
+        return 
+    fi  
+    # Get directory
+    DIR=${FNAME%/*}
+    case $DIR in
+          /*)
+              echo "Using absolute path" ;;
+          ./*)
+              echo "Inferring absolute path"
+              DIR=${DIR#"."}
+              DIR=$PWD$DIR;;
+          *)
+              echo "Could not infer path"
+              return ;;
+    esac
+    FILEXMDS=$(basename -- "$FNAME")
+    FILEEXEC="${FILEXMDS%.*}"
+    # Create container, mount volume and run
+    RUNSTRING="source /opt/intel/bin/compilervars.sh intel64 && xmds2 "$FILEXMDS" && ./"$FILEEXEC
+    echo $RUNSTRING
+    echo "Mounting path: "$DIR
+    docker run --rm -v $DIR:/dataDir xmds2:latest /bin/bash -c "${RUNSTRING}"
+}
