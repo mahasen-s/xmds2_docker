@@ -24,9 +24,9 @@ function xmds2() {
     FILEXMDS=$(basename -- "$FNAME")
     FILEEXEC="${FILEXMDS%.*}"
     # Create container, mount volume and run
-    RUNSTRING="source /opt/intel/bin/compilervars.sh intel64 && xmds2 "$FILEXMDS" && ./"$FILEEXEC
+    RUNSTRING="xmds2 "$FILEXMDS" && ./"$FILEEXEC
     echo $RUNSTRING
     echo "Mounting path: "$DIR
-    docker run --rm -v $DIR:/dataDir xmds2:lates /bin/bash -c "${RUNSTRING}"
+    docker run --rm -v $DIR:/dataDir xmds2:latest /bin/bash -c "${RUNSTRING}"
 
 }
